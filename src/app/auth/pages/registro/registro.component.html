@@ -1,0 +1,144 @@
+<h2>Validaciones Reactivas: Registro</h2>
+<hr>
+<div class="row">
+  <div class="col">
+
+    <form (ngSubmit)="submitFormularo()" autocomplete="off" [formGroup]="miFormulario">
+
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Nombre</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" formControlName="nombre" placeholder="Nombre del usuario">
+          <span *ngIf="campoNoValido( 'nombre' )" class="form-text text-lc">* Campo obligatorio con nombre y apelldo</span>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Email</label>
+        <div class="col-sm-9">
+          <div class="input-group">
+            <input type="email" class="form-control" formControlName="email" placeholder="Email del usuario">
+            <span class="input-group-text" id="basic-addon2">@example.com</span>
+          </div>
+          <span *ngIf="campoNoValido( 'email' )" class="form-text text-lc">* Campo obligatorio con formato correcto</span>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Username</label>
+        <div class="col-sm-9">
+          <div class="input-group">
+            <span class="input-group-text" id="basic-addon1">@</span>
+            <input type="text" class="form-control" formControlName="username" placeholder="Username">
+          </div>
+          <span *ngIf="campoNoValido( 'username' )" class="form-text text-lc">* Campo obligatorio de al menos 3
+            caracteres</span>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Pasword</label>
+        <div class="col-sm-9">
+          <div class="input-group">
+            <input type="password" class="form-control" formControlName="password1" placeholder="Introduce contraseña">
+            <span class="input-group-text" id="basic-addon1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
+                <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z"/>
+                <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z"/>
+              </svg>
+            </span>
+          </div>
+          <span *ngIf="campoNoValido( 'password1' )" class="form-text text-lc">* Campo obligatorio de al menos 6
+            caracteres con numeros y letras</span>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label"></label>
+        <div class="col-sm-9">
+          <div class="input-group">
+          <input type="password" class="form-control" formControlName="password2" placeholder="Repite contraseña">
+          <span class="input-group-text" id="basic-addon1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
+              <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z"/>
+              <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z"/>
+            </svg>
+          </span>
+        </div>
+          <span *ngIf="campoNoValido( 'password2' )" class="form-text text-lc">* La contraseñas deven cohincidir</span>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label"></label>
+        <div class="col-sm-9">
+          <div class="form-check">
+            <input
+              class="form-check-input me-3"
+              type="checkbox"
+              formControlName="condiciones"
+              id="condicionesCheck"
+              >
+            <label class="form-check-label" for="condicionesCheck">
+              Acepto los <a href="">términos y condiciones</a>
+            </label>
+          </div>
+          <span *ngIf="campoNoValido( 'condiciones' )" class="form-text text-lc">* Deve de aceptar las condiciones</span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <!-- <button type="submit" class="btn btn-primary float-end" [disabled]="true" (click)="guardar()"> -->
+          <button type="submit" class="btn btn-primary float-end" (click)="submitFormularo()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus-fill me-2" viewBox="0 0 16 16">
+              <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+              <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+            </svg>
+            Registar
+          </button>
+
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<br>
+<hr>
+<div class="d-flex align-items-center justify-content-between mt-6">
+  <div>
+    <span>Formulario</span>
+    <hr>
+    <pre>Valid: {{ miFormulario.valid }}</pre>
+    <hr>
+    <pre>Pristine: {{ miFormulario.pristine }}</pre>
+    <hr>
+    <pre>Touched: {{ miFormulario.touched }}</pre>
+    <hr>
+  </div>
+  <div>
+    <span>Valor</span>
+    <hr>
+    <pre>Valor Formulario: {{ miFormulario.value | json }}</pre>
+    <hr>
+    <pre>Usuario: {{ usuario | json }}</pre>
+    <hr>
+  </div>
+  <div>
+    <span>Errors</span>
+    <hr>
+    <pre *ngIf="miFormulario.controls['nombre']">Nombre: {{ miFormulario.controls['nombre'].errors | json }}</pre>
+    <hr>
+    <pre *ngIf="miFormulario.controls['email']">Email: {{ miFormulario.controls['email'].errors | json }}</pre>
+    <hr>
+    <pre *ngIf="miFormulario.controls['username']">Username: {{ miFormulario.controls['username'].errors | json }}</pre>
+    <hr>
+    <pre *ngIf="miFormulario.controls['password1']">Password: {{ miFormulario.controls['password1'].errors | json }}</pre>
+    <hr>
+    <pre *ngIf="miFormulario.controls['condiciones']">Condiciones: {{ miFormulario.controls['condiciones'].errors | json }}</pre>
+    <hr>
+  </div>
+</div>
+

@@ -1,0 +1,128 @@
+<h2>Template Swiches</h2>
+<hr>
+<div class="row">
+  <div class="col">
+
+    <form (ngSubmit)="guardar()" #miFormulario="ngForm">
+
+      <div class="mb-3 row align-items-center">
+        <label class="col-sm-3 col-form-label">Género</label>
+        <div class="col-sm-9 row">
+          <div class="col-sm-6">
+            <div class="form-check justify-content-evenly d-flex">
+              <input
+                class="form-check-input"
+                value="M"
+                [(ngModel)]="persona.genero"
+                type="radio"
+                name="radioGenero"
+                id="radioMasculino"
+                required>
+              <label class="form-check-label" for="radioMasculino">Masculino</label>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-check justify-content-evenly d-flex">
+              <input
+                class="form-check-input"
+                value="F"
+                [(ngModel)]="persona.genero"
+                type="radio"
+                name="radioGenero"
+                id="radioFemenino"
+                required>
+              <label class="form-check-label" for="radioFemenino">Femenino</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3 row align-items-center">
+        <label class="col-sm-3 col-form-label">Notificaciones</label>
+        <div class="col-sm-9 row">
+          <div class="form-check form-switch ms-5">
+            <input
+              class="form-check-input me-3"
+              type="checkbox"
+              [(ngModel)]="persona.notificaciones"
+              name="notificaciones"
+              role="switch"
+              id="flexSwitchCheckDefault">
+            <label class="form-check-label" for="flexSwitchCheckDefault">Quiero recibir notificaciones</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3 row align-items-center">
+        <label class="col-sm-3 col-form-label">Condiciones</label>
+        <div class="col-sm-9 row">
+          <div class="form-check ms-5">
+            <input
+              class="form-check-input me-3"
+              type="checkbox"
+              [(ngModel)]="condiciones"
+              name="condicionesCheck"
+              id="condicionesCheck"
+              required>
+            <label class="form-check-label" for="condicionesCheck">
+              Acepto los <a href="">términos y condiciones</a>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <button type="submit" class="btn btn-primary float-end" [disabled]="miFormulario.invalid">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-folder-plus me-2" viewBox="0 0 16 16">
+              <path
+                d="m.5 3 .04.87a1.99 1.99 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2zm5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19c-.24 0-.47.042-.683.12L1.5 2.98a1 1 0 0 1 1-.98h3.672z">
+              </path>
+              <path
+                d="M13.5 10a.5.5 0 0 1 .5.5V12h1.5a.5.5 0 1 1 0 1H14v1.5a.5.5 0 1 1-1 0V13h-1.5a.5.5 0 0 1 0-1H13v-1.5a.5.5 0 0 1 .5-.5z">
+              </path>
+            </svg>
+            Guardar
+          </button>
+
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<br>
+<hr>
+<div class="d-flex align-items-center justify-content-between mt-6">
+  <div>
+    <span>Formulario</span>
+    <hr>
+    <pre>Valid: {{ miFormulario.valid }}</pre>
+    <hr>
+    <pre>Pristine: {{ miFormulario.pristine }}</pre>
+    <hr>
+    <pre>Touched: {{ miFormulario.touched }}</pre>
+    <hr>
+  </div>
+  <div>
+    <span>Valor</span>
+    <hr>
+    <pre>{{ persona | json }}</pre>
+    <hr>
+    <span>Condiciones</span>
+    <hr>
+    <pre>Condiciones: {{ condiciones | json }}</pre>
+    <hr>
+  </div>
+  <div>
+    <span>Errores</span>
+    <hr>
+    <pre *ngIf="miFormulario.controls['radioGenero']">Género: {{ miFormulario.controls['radioGenero'].errors | json }}</pre>
+    <hr>
+    <pre *ngIf="miFormulario.controls['condicionesCheck']">Condiciones: {{ miFormulario.controls['condicionesCheck'].errors | json }}</pre>
+    <hr>
+  </div>
+</div>
+
