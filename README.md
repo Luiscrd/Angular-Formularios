@@ -8,6 +8,8 @@ Install [JSON Server](https://www.npmjs.com/package/json-server) from `npm insta
 
 open cdm in `/Formularios_serve` and run `json-server --watch db.json`
 
+Now if you go to `http://localhost:3000/usuarios`
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
