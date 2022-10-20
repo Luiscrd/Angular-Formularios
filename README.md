@@ -4,6 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Run Bd
 Install JSON Server from `npm install -g json-server`
+(https://www.npmjs.com/package/json-server)
 open cdm in `/Formularios_serve` and run `json-server --watch db.json`
 
 ## Development server
