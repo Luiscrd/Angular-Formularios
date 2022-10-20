@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ValidatorService } from '../../../shared/validator/validator.service';
+import { EmailValidatorService } from '../../../shared/validator/email-validator.service';
 
 interface Usuario {
   nombre: string;
@@ -15,15 +17,20 @@ interface Usuario {
 })
 export class RegistroComponent implements OnInit {
 
-  nombreApellidoPattern: string = '([a-zA-Z]+) ([a-zA-Z]+)';
-
   miFormulario: FormGroup = this.fb.group({
-    nombre: [ '', [ Validators.required, Validators.minLength(3), Validators.pattern( this.nombreApellidoPattern ) ] ],
-    email: [ '', [ Validators.required, Validators.minLength(3) ] ],
-    username: [ '', [ Validators.required, Validators.minLength(3) ] ],
-    password1: [ '', [ Validators.required, Validators.minLength(3) ] ],
-    password2: [ '', [ Validators.required, Validators.minLength(3) ] ],
+    nombre: [ '', [ Validators.required, Validators.minLength(3), Validators.pattern( this.validatorService.nombreApellidoPattern ) ] ],
+    email: [ '', [
+      Validators.required,
+      Validators.minLength(6),
+      Validators.pattern( this.validatorService.emailPattern )
+    ], [ this.emailValidator ]
+  ],
+    username: [ '', [ Validators.required, Validators.minLength(3), this.validatorService.noPuedeSerStrider ]  ],
+    password1: [ '', [ Validators.required, Validators.minLength(6) ] ],
+    password2: [ '', [ Validators.required ] ],
     condiciones: [ false, Validators.requiredTrue ],
+  }, {
+    validators: [ this.validatorService.camposIguales( 'password1', 'password2' )]
   })
 
   usuario: Usuario = {
@@ -33,9 +40,65 @@ export class RegistroComponent implements OnInit {
     password: '',
   }
 
-  constructor( private fb: FormBuilder ) { }
+  mostrarPassword1: string = 'password'
+  mostrarPassword2: string = 'password'
+
+  // Mensajes de erorr personalizado para cambiar en el html
+
+  get errorMailMsg(): string {
+
+    const error = this.miFormulario.controls[ 'email' ]?.errors
+
+      if( error!['required'] ){
+
+        return '* Campo obligatorio'
+
+      } else if ( error!['minlength'] ) {
+
+        return '* El campo debe tener 6 digitos al menos'
+
+      } else if ( error!['pattern'] ) {
+
+        return '* El formato no es correcto'
+
+      } else if ( error!['emailExist'] ) {
+
+        return '* El mail ya está en uso'
+      }
+
+    return''
+
+  }
+
+  constructor(
+
+    private fb: FormBuilder,
+    private validatorService: ValidatorService,
+    private emailValidator: EmailValidatorService
+
+    ) { }
 
   ngOnInit(): void {
+  }
+
+  funMostrarPassword1( ){
+
+    if ( this.mostrarPassword1 === 'password') {
+      this.mostrarPassword1 = 'text'
+    } else {
+      this.mostrarPassword1 = 'password'
+    }
+
+  }
+
+  funMostrarPassword2( ){
+
+    if ( this.mostrarPassword2 === 'password') {
+      this.mostrarPassword2 = 'text'
+    } else {
+      this.mostrarPassword2 = 'password'
+    }
+
   }
 
   campoNoValido( campo:string ){

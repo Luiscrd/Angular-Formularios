@@ -18,6 +18,16 @@
   routerLinkActive="active">{{ link.texto }}</li>
 </ul>
 <br>
+<h2>Selectores</h2>
+<hr>
+<ul class="list-group">
+  <li
+  class="list-group-item list-group-item-action"
+  *ngFor="let link of selectMenu"
+  [routerLink]=[link.ruta]
+  routerLinkActive="active">{{ link.texto }}</li>
+</ul>
+<br>
 <h2>Validaciones</h2>
 <hr>
 <ul class="list-group">

@@ -20,7 +20,7 @@
             <input type="email" class="form-control" formControlName="email" placeholder="Email del usuario">
             <span class="input-group-text" id="basic-addon2">@example.com</span>
           </div>
-          <span *ngIf="campoNoValido( 'email' )" class="form-text text-lc">* Campo obligatorio con formato correcto</span>
+          <span *ngIf="campoNoValido( 'email' )" class="form-text text-lc">{{ errorMailMsg }}</span>
         </div>
       </div>
 
@@ -31,8 +31,10 @@
             <span class="input-group-text" id="basic-addon1">@</span>
             <input type="text" class="form-control" formControlName="username" placeholder="Username">
           </div>
-          <span *ngIf="campoNoValido( 'username' )" class="form-text text-lc">* Campo obligatorio de al menos 3
-            caracteres</span>
+          <span *ngIf="campoNoValido( 'username' ) && miFormulario.controls['username'].errors!['required']" class="form-text text-lc">* Campo obligatorio</span>
+            <span *ngIf="campoNoValido( 'username' ) &&  miFormulario.controls['username'].errors!['minlength']" class="form-text text-lc">* Debe tener al menos 3
+              caracteres</span>
+            <span *ngIf="campoNoValido( 'username' ) && miFormulario.controls['username'].errors!['noStrider']" class="form-text text-lc">* No puede ser 'strider'...</span>
         </div>
       </div>
 
@@ -40,9 +42,9 @@
         <label class="col-sm-3 col-form-label">Pasword</label>
         <div class="col-sm-9">
           <div class="input-group">
-            <input type="password" class="form-control" formControlName="password1" placeholder="Introduce contraseña">
+            <input [type]="mostrarPassword1" class="form-control" formControlName="password1" placeholder="Introduce contraseña">
             <span class="input-group-text" id="basic-addon1">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
+              <svg (click)="funMostrarPassword1()" style="cursor: pointer;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
                 <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z"/>
                 <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z"/>
               </svg>
@@ -57,15 +59,15 @@
         <label class="col-sm-3 col-form-label"></label>
         <div class="col-sm-9">
           <div class="input-group">
-          <input type="password" class="form-control" formControlName="password2" placeholder="Repite contraseña">
+          <input [type]="mostrarPassword2" class="form-control" formControlName="password2" placeholder="Repite contraseña">
           <span class="input-group-text" id="basic-addon1">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
+            <svg (click)="funMostrarPassword2()" style="cursor: pointer;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
               <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z"/>
               <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z"/>
             </svg>
           </span>
         </div>
-          <span *ngIf="campoNoValido( 'password2' )" class="form-text text-lc">* La contraseñas deven cohincidir</span>
+          <span *ngIf="campoNoValido( 'password2' )" class="form-text text-lc">* La contraseñas deven ser iguales</span>
         </div>
       </div>
 
@@ -83,7 +85,7 @@
               Acepto los <a href="">términos y condiciones</a>
             </label>
           </div>
-          <span *ngIf="campoNoValido( 'condiciones' )" class="form-text text-lc">* Deve de aceptar las condiciones</span>
+          <span *ngIf="campoNoValido( 'condiciones' )" class="form-text text-lc">* Debe de aceptar las condiciones</span>
         </div>
       </div>
 
@@ -113,6 +115,10 @@
     <hr>
     <pre>Valid: {{ miFormulario.valid }}</pre>
     <hr>
+    <pre>Status: {{ miFormulario.status }}</pre>
+    <hr>
+    <pre>Errors:  {{ miFormulario.errors | json }}</pre>
+    <hr>
     <pre>Pristine: {{ miFormulario.pristine }}</pre>
     <hr>
     <pre>Touched: {{ miFormulario.touched }}</pre>
@@ -136,6 +142,8 @@
     <pre *ngIf="miFormulario.controls['username']">Username: {{ miFormulario.controls['username'].errors | json }}</pre>
     <hr>
     <pre *ngIf="miFormulario.controls['password1']">Password: {{ miFormulario.controls['password1'].errors | json }}</pre>
+    <hr>
+    <pre *ngIf="miFormulario.controls['password2']">Password2: {{ miFormulario.controls['password2'].errors | json }}</pre>
     <hr>
     <pre *ngIf="miFormulario.controls['condiciones']">Condiciones: {{ miFormulario.controls['condiciones'].errors | json }}</pre>
     <hr>

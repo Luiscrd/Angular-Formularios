@@ -53,5 +53,15 @@ authMenu: MenuItem[] = [
   },
 ];
 
+selectMenu: MenuItem[] = [
+  {
+    texto: 'Anidados: Disabled',
+    ruta: '/selectores/disabled'
+  },
+  {
+    texto: 'Anidados: NgIf',
+    ruta: '/selectores/ngif'
+  },
+];
 
 };
